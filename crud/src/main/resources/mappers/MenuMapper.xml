@@ -9,6 +9,12 @@
 		<result property="categoryCode" column="CATEGORY_CODE"/>
 		<result property="orderableStatus" column="ORDERABLE_STATUS"/>
 	</resultMap>
+	
+	<resultMap type="com.greedy.crud.model.dto.CategoryDTO" id="categoryResultMap">
+		<id property="code" column="CATEGORY_CODE"/>
+		<result property="name" column="CATEGORY_NAME"/>
+		<result property="refCategoryCode" column="REF_CATEGORY_CODE"/>
+	</resultMap>
 
 	<select id="findAllMenu" resultMap="menuResultMap">
 		SELECT
@@ -21,4 +27,33 @@
 		 WHERE ORDERABLE_STATUS = 'Y'
 		 ORDER BY MENU_CODE
 	</select>
+	
+	<select id="findAllCategory" resultMap="categoryResultMap">
+		SELECT
+			   CATEGORY_CODE
+			 , CATEGORY_NAME
+			 , REF_CATEGORY_CODE
+		 FROM TBL_CATEGORY
+		WHERE REF_CATEGORY_CODE IS NOT NULL
+	</select>
+	
+	<insert id="registMenu">
+		INSERT
+		  INTO TBL_MENU
+		(
+		  MENU_CODE
+		, MENU_NAME
+		, MENU_PRICE
+		, CATEGORY_CODE
+		, ORDERABLE_STATUS
+		)
+		VALUES
+		(
+		  SEQ_MENU_CODE.NEXTVAL
+		, #{ name }
+		, #{ price }
+		, #{ categoryCode }
+		, #{ orderableStatus }
+		)
+	</insert>
 </mapper>

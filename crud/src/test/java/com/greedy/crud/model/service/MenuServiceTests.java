@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.greedy.crud.config.CrudApplication;
+import com.greedy.crud.model.dto.CategoryDTO;
 import com.greedy.crud.model.dto.MenuDTO;
 
 @SpringBootTest
@@ -35,6 +36,18 @@ public class MenuServiceTests {
 		
 		//then
 		assertNotNull(menuList);
+	}
+	
+	@Test
+	public void 전체_카테고리_조회용_서비스_메소드_테스트() {
+		
+		//given
+		
+		//when
+		List<CategoryDTO> categoryList = menuService.findAllCategory();
+		
+		//then
+		assertNotNull(categoryList);
 	}
 
 }

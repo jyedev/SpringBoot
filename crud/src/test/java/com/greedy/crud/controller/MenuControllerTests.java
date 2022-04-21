@@ -46,4 +46,16 @@ public class MenuControllerTests {
 				.andExpect(MockMvcResultMatchers.forwardedUrl("menu/list"))
 				.andDo(MockMvcResultHandlers.print());
 	}
+	
+	@Test
+	public void 전체_카테고리_조회용_컨트롤러_테스트() throws Exception {
+		
+		//given
+		
+		//when & then
+		mockMvc.perform(MockMvcRequestBuilders.get("/menu/category"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=UTF-8"))
+				.andDo(MockMvcResultHandlers.print());
+	}
 }
