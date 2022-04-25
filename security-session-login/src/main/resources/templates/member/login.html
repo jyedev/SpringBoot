@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>login Page</title>
+</head>
+<body>
+	<!-- 
+		spring security의 formlogin을 할 경우 username, password로 꺼내게 되어 있으므로 name 속성 설정에 유의
+		"/member/login" 요청은 시큐리티에 설정해두었으므로 해당 요청을 가로채서
+		userDetailsService의 용도로 memberService를 사용하겠다고 전달 했기 때문에 loadUserByUserName메소드가 호출 되어
+		User 객체를 리턴하게 되며 비밀번호 확인(설정 된 passwordEncoder 사용) 후 인증 되면 세션에 저장하는 기능이 자동으로 동작한다.
+	 -->
+	 <h1 align="center">로그인 페이지</h1>
+	 <div align="center">
+	 	<form action="/member/login" method="post">
+			<div>
+				<span>아이디 : </span>
+				<input type="text" name="username">
+			</div>
+			<div>
+				<span>비밀 번호 : </span>
+				<input type="password" name="password">
+			</div>
+			<div>
+				<button>로그인</button>
+			</div>
+	 	</form>
+	 </div>
+</body>
+</html>
