@@ -1,6 +1,7 @@
 package com.greedy.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.greedy.security.handler.LoginFailHandler;
 import com.greedy.security.member.model.service.MemberService;
 
 @EnableWebSecurity
@@ -48,6 +50,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				// "/menu/**"의 POST 요청은 admin에게 허용
 				//hasRole 앞에 ROLE_가 자동으로 붙음
 				.antMatchers(HttpMethod.POST, "/menu/**").hasRole("ADMIN")
+				// "/admin/**" 의 요청은 admin 에게 허용 
+				.antMatchers("/admin/**").hasRole("ADMIN")
 				//그 외의 모든 요청은 허가 - 인증(로그인) 되지 않은 사용자도 요청 가능
 				.anyRequest().permitAll()
 			.and()
@@ -57,6 +61,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.loginPage("/member/login")
 				//성공 시 랜딩 페이지 설정
 				.successForwardUrl("/")
+				//로그인 실패 시의 핸들러 설정
+				.failureHandler(loginFailHandler())
 			.and()
 				//로그아웃 설정
 				.logout()
@@ -82,6 +88,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(memberService).passwordEncoder(passwordEncoder);
 	}
 	
-
+	//로그인 실패 핸들러 bean 동작
+	@Bean
+	public LoginFailHandler loginFailHandler() {
+		return new LoginFailHandler();
+	}
 	
 }

@@ -1,4 +1,4 @@
-package com.greedy.security.main;
+package com.greedy.security.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
